@@ -1,1 +1,11 @@
 /*Custom styles here*/
+
+.panel panel-default {
+  text-align: center;
+  overflow-y: scroll;
+}
+
+.list-group {
+  text-align: center;
+  overflow-y: scroll;
+}
