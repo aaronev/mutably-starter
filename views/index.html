@@ -3,33 +3,30 @@
   <head>
     <title>Mutably front-end</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../public/style.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="/script.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
   </head>
   <body class="container">
+  <h3 class="reset">
+    <a href="https://mutably.herokuapp.com/reset">
+      Reset
+    </a>
+  </h3>
     <div class="col-sm-8 col-sm-offset-2">
       <nav class="navbar navbar-default">
-        <a class="navbar-brand" href="/">Mutably Front-end</a>
+        <a class="navbar-brand" href="/">Mutably API Books</a>
       </nav>
       <div class="panel panel-default">
         <div class="panel-heading">Books</div>
-        <ul class="list-group">
-        <% for (let i = 0; i < books.length; i++) { %>
-
-        <li><%books[i]._id%></li>
-        <li><%books[i].title%></li>
-        <li><%books[i].author%></li>
-        <li><img src=<%books[i].image%>/></li>
-        <li><%books[i].releaseDate%></li>
-        <li><button>Edit</button>
-            <button>Delete</button> 
-            <button>Save</button></li>
-
-          <% } %>
-        </ul>
+        <ul class="list-group"></ul>
       </div>
     </div>
-
+    <p>Add Book</p>
+    <input id="title" placeholder="Title">
+    <input id="image" placeholder="Image">
+    <input id="author" placeholder="Author">
+    <input id="releaseDate" placeholder="Release Date">
+    <input type="submit" id='newBook'>
   </body>
 </html>
