@@ -1,70 +1,14 @@
 console.log("Sanity Check: JS is working!");
 
-$(document).ready(function(){
-  getAllBooks()
-})
-
-$(document).on('click', '.editButton', function(event){
-  console.log('entered click', $(event.target).siblings('.book-form'))
-  $(event.target).siblings('.book-form').show()
-  $(event.target).remove()
-})
-// let book = {
-//   id: `${id}`,
-// }
-
-let saveForm = $(
-  '<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="  <div id="light" class="white_content"><form id="new-Book" name="post-form" text-align="center" action="index.html" method="post">'+
-  '<label for="title">Title</label><br>'+
-  '<input default="Title" class="title" type="text" value="Title"><br>'+
-  '<label for="image">Image</label><br>'+
-  '<input default="Image" class="image" type="text" value="Image"><br>'+
-  '<label for="author">Author</label><br>'+
-  '<input default="Author" class="author" type="text" value="Author"><br>'+
-  '<label for="releaseDate">Release Date</label><br>'+
-  '<input default="Release Date" class="releaseDate" type="text" value="Release Date"><br>'+
-  '</form><button="javascript:void(0)" id="save" onclick="save()".style.display="none";document.getElementById("fade").style.display="none">Save</button>'+
-  '</div>'+
-  '<div id="fade" class="black_overlay"></div></button>'
-)
-
-function makeBookForm(book){
-  return '<div class="book-form" style="display:none">' +
-  '<form id="new-Book" name="post-form" text-align="center" action="index.html" method="post">'+
-  `<label for="title">Title</label><br>`+
-  `<input class="title" type="text" value="${book.title}"><br>`+
-  '<label for="image">Image</label><br>'+
-  '<input default="Image" class="image" type="text" value="Image"><br>'+
-  '<label for="author">Author</label><br>'+
-  '<input default="Author" class="author" type="text" value="Author"><br>'+
-  '<label for="releaseDate">Release Date</label><br>'+
-  '<input default="Release Date" class="releaseDate" type="text" value="Release Date"><br>'+
-  '<button="javascript:void(0)" id="save" type="submit" onclick="save()".style.display="none";document.getElementById("fade").style.display="none">Save</button>'
-  '</form>' +
-  '</div>'
-
-}
-
-
-
-function addBook(book){
-  let editButton = '<button class="editButton" id='+book._id+'>Edit</button>'
-
-  
-  let li = $(
-      '<li id='+book._id+' class="book"><span class="edit-list">'+
-      '<div><h1><b>'+book.title +'</b></h1></div>'+
-      '<div><a href=#><img src="'+book.image+'" width="80%"/></a></div>'+
-      '<div><h3>'+ book.author +'</h3></div>'+
-      '<div>'+ book.releaseDate+'</div>'+
-      editButton +
-      makeBookForm(book) +
-        '<button class="deleteButton" id='+book.id+'>Delete</button>'+
-      '</div>'+
-    '</span></li>'
-  )
-  $(".list-group").append(li)
-}
+function form(title, image, author, releaseDate) {
+  let book = {
+    title: title,
+    image: image,
+    author: author,
+    releaseDate: releaseDate
+  }
+  return book
+} 
 
 function getAllBooks() {
   $.ajax({url: "https://mutably.herokuapp.com/books", 
@@ -73,90 +17,98 @@ function getAllBooks() {
       console.log(books.length)
       for (let i = 0; i < books.length; i++) {
         addBook(books[i])
-      } ;
+      }
     }
   })
 } 
 
-$(document).on('click', "#newBook", function(form) {
-  info = {
-    title: $('#title').val(),
-    image: $('#image').val(),
-    author: $('#author').val(),
-    releaseDate: $('#releaseDate').val(), 
-  }
-  $.ajax({
-    url: "https://mutably.herokuapp.com/books",
-    method: "POST",
-    data: info
-  }) 
-  addBook(info)
+function addBook(book) {
+  let title = '<h1 class="addTitle">'+book.title+'</h1>'
+  let image = '<img class="addImage" width= "80%" src="'+book.image+'"/>'
+  let author = '<h2  class="addAuthor">'+book.author+'</h2>'
+  let releaseDate = '<h5 class="addReleaseDate">'+book.releaseDate+'</h5>'
+  let editButton = '<button class="editButton" id='+book._id+'>Edit</button>'
+  let deleteButton = '<button id='+book._id+' class="deleteButton">Delete</button>'
+  let buttons = editButton + deleteButton
+  let li = title + image + author + releaseDate + buttons
+  $('.list-group').append('<li class="book" id='+book._id+'>'+li+'</li>')
+}
+
+$(document).ready(function(){
   getAllBooks()
+  $('.editForm').hide()
 })
 
+$(document).on('click', "#newBook", function(form) {
+  let title = $('#title').val()
+  console.log(title)
+  let image = $('#image').val()
+  let author = $('#author').val()
+  let releaseDate = $('#releaseDate').val()
+  let book = {
+    title: title,
+    image: image, 
+    author: author, 
+    releaseDate: releaseDate
+  } 
+   $.ajax({
+    url: "https://mutably.herokuapp.com/books",
+    method: "POST",
+    data: book,
+    success: addBook(book)
+  })
+})
+
+$(document).on('click', '.editButton', function(event){
+  let parent = $(this).parent()
+  if($(this).html() === "Save") {
+    let id = $(this).attr('id')
+    let title = $('#editTitle').val()
+    let img = $('#editImage').val()
+    let auth =  $('#editAuthor').val()
+    let relDate = $('#editReleaseDate').val() 
+    let updatedBook = form(title, img, auth, relDate)
+    $.ajax({
+      url: "https://mutably.herokuapp.com/books/"+id, 
+      method: "PUT",
+      data: updatedBook,
+      success: function() {
+        $('.editForm').hide()
+        parent.empty()
+        addBook(updatedBook)
+      }
+    })
+  }
+})
+
+$(document).on('click', '.editButton', function(event){
+  if ($(this).html() === "Edit") {
+    $(this).html("Save")
+  } else {$(this).html("Edit")}
+  $('#editTitle').val($(this).parent().find('.addTitle').html())
+  $('#editAuthor').val($(this).parent().find('.addAuthor').html())
+  $('#editImage').val($(this).parent().find('.addImage').attr('src'))
+  $('#editReleaseDate').val($(this).parent().find('.addReleaseDate').html())
+  $('.editForm').show()
+})
+
+$(document).on('click', '#cancel', function(event){
+  $('.editForm').hide()
+  $('.editButton').html('Edit')
+})  
+
 $(document).on('click', '.deleteButton', function(event) {
-  let li = $(event.target).closest('.book').attr('id')
+  let li = $(event.target).closest('.book')
   let id = $("li").attr('id')
   $.ajax({ 
     method: 'DELETE',
     url: 'https://mutably.herokuapp.com/books/'+id,
     success: function() {
-      li.fadeOut( function(){
+      li.fadeOut(function(){
         li.remove()
       })
     }
   }) 
 })
 
-function save(event) {
-  console.log($("li").parent('li'))
-  let id = $(event.target).closest('li').attr('id')
-
-
-  let info = {
-    title: $('.title').val(),
-    image: $('.image').val(),
-    author: $('.author').val(),
-    releaseDate: $('.releaseDate').val(), 
-  }
-
-  // let book = {}
-  console.log(id)
-  $.ajax({
-    url: "https://mutably.herokuapp.com/books/"+id,
-    succes: function(aBook) {
-      book.title = aBook.title,
-      book.image = aBook.image,
-      book.author = aBook.author,
-      book.releaseDate = aBook.releaseDate
-    }
-  })
-
-  console.log(info.title)
-  if (info.title === "Title") {
-    book.title = info.title
-    console.log('after', info.title)
-  }
-  if (info.image === "Image") {
-    book.image = info.image
-  }
-  if (info.author === "Author") {
-    book.author = info.author
-  }
-  if (info.releaseDate === "Release Date") {
-    book.releaseDate = info.releaseDate
-  }
-
-  $.ajax({url: "https://mutably.herokuapp.com/books/"+id,
-    method: 'PUT',
-    data: info,
-    success: function(book) {
-      console.log("test")
-    }
-  })
-  $(document).on('click', '#save', function(event){
-  $(event.target).closest(saveForm).replaceWith(editButton)
-})
-}
-
-console.log("You've reached the end!")
+console.log("Sanity Check: Yeahh JS does working!");
