@@ -24,19 +24,27 @@
     </div>
     <div class="addForm">
       <p>Add Book</p>
-      <input default="Title" id="title" placeholder="Title">
-      <input default="Image" id="image" placeholder="Image">
-      <input default="Author" id="author" placeholder="Author">
-      <input default="Release Date" id="releaseDate" placeholder="Release Date">
+      <input default="Title" id="title" placeholder="Title" required>
+      <input default="Image" id="image" placeholder="Image" required>
+      <input default="Author" id="author" placeholder="Author" required>
+      <input default="Release Date" id="releaseDate" placeholder="Release Date" required>
       <input type="submit" id="newBook" value="Add">
     </div>
     <div class="editForm">
-      <h3>Edit Book</h3>
-      <input id="editTitle">
-      <input id="editImage">
-      <input id="editAuthor">
-      <input id="editReleaseDate">
-      <input type="submit" id="cancel" value="Cancel">
+      <fieldset>
+        <legend>Edit Book</legend>
+        Title: 
+        <div>
+          <input id="editTitle">
+        </div>
+        Image: 
+        <input id="editImage">
+        Author: 
+        <input id="editAuthor">
+        Release Date: 
+        <input id="editReleaseDate">
+        <input type="submit" id="cancel" value="Cancel">
+      </fieldset>
     </div>
   </body>
 </html>
