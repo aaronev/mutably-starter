@@ -45,24 +45,21 @@ function makeBookForm(book){
 
 }
 
+function makeBookLayout(book) {
+    return '<li id='+book._id+' class="book"><span class="edit-list">'+
+    '<div><h1><b>'+book.title +'</b></h1></div>'+
+    '<div><a href=#><img src="'+book.image+'" width="80%"/></a></div>'+
+    '<div><h3>'+ book.author +'</h3></div>'+
+    '<div>'+ book.releaseDate+'</div>'+
+    '<button class="editButton" id='+book._id+'>Edit</button>' +
+    makeBookForm(book) +
+      '<button class="deleteButton" id='+book.id+'>Delete</button>'+
+    '</div>'+
+  '</span></li>'
+}
 
-
-function addBook(book){
-  let editButton = '<button class="editButton" id='+book._id+'>Edit</button>'
-
-  
-  let li = $(
-      '<li id='+book._id+' class="book"><span class="edit-list">'+
-      '<div><h1><b>'+book.title +'</b></h1></div>'+
-      '<div><a href=#><img src="'+book.image+'" width="80%"/></a></div>'+
-      '<div><h3>'+ book.author +'</h3></div>'+
-      '<div>'+ book.releaseDate+'</div>'+
-      editButton +
-      makeBookForm(book) +
-        '<button class="deleteButton" id='+book.id+'>Delete</button>'+
-      '</div>'+
-    '</span></li>'
-  )
+function addBook(bookLayout){
+  let li = $(bookLayout)
   $(".list-group").append(li)
 }
 
@@ -79,7 +76,7 @@ function getAllBooks() {
 } 
 
 $(document).on('click', "#newBook", function(form) {
-  info = {
+  let book = {
     title: $('#title').val(),
     image: $('#image').val(),
     author: $('#author').val(),
@@ -88,10 +85,13 @@ $(document).on('click', "#newBook", function(form) {
   $.ajax({
     url: "https://mutably.herokuapp.com/books",
     method: "POST",
-    data: info
+    data: book,
+    success: function(result){
+      let bookLayout = makeBookLayout(book)
+      addBook(bookLayout)
+      getAllBooks()
+    }
   }) 
-  addBook(info)
-  getAllBooks()
 })
 
 $(document).on('click', '.deleteButton', function(event) {

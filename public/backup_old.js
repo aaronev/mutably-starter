@@ -63,6 +63,7 @@ function addBook(book){
       '</div>'+
     '</span></li>'
   )
+  // li.data('book', book)
   $(".list-group").append(li)
 }
 

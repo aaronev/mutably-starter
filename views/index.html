@@ -9,7 +9,7 @@
   </head>
   <body class="container">
   <h3 class="reset">
-    <a href="https://mutably.herokuapp.com/reset">
+    <a target="_blank" href= "https://mutably.herokuapp.com/reset">
       Reset
     </a>
   </h3>
@@ -22,11 +22,13 @@
         <ul class="list-group"></ul>
       </div>
     </div>
-    <p>Add Book</p>
-    <input id="title" placeholder="Title">
-    <input id="image" placeholder="Image">
-    <input id="author" placeholder="Author">
-    <input id="releaseDate" placeholder="Release Date">
-    <input type="submit" id='newBook'>
+    <div class="addColumn">
+      <p>Add Book</p>
+      <input default="Title" id="title" placeholder="Title">
+      <input default="Image" id="image" placeholder="Image">
+      <input default="Author" id="author" placeholder="Author">
+      <input default="Release Date" id="releaseDate" placeholder="Release Date">
+      <input type="submit" id="newBook" value="Add">
+    </div>
   </body>
 </html>
