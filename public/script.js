@@ -22,10 +22,10 @@ function getAllBooks() {
 } 
 
 function addBook(book) {
-  let title = '<h1 class="addTitle">'+book.title+'</h1>'
-  let image = '<img class="addImage" width= "80%" src="'+book.image+'"/>'
-  let author = '<h2  class="addAuthor">'+book.author+'</h2>'
-  let releaseDate = '<h5 class="addReleaseDate">'+book.releaseDate+'</h5>'
+  let title = '<div><h1 class="addTitle">'+book.title+'</h1></div>'
+  let image = '<div><img class="addImage" width= "80%" src="'+book.image+'"/></div>'
+  let author = '<div><h2  class="addAuthor">'+book.author+'</h2></div>'
+  let releaseDate = '<div><h5 class="addReleaseDate">'+book.releaseDate+'</h5></div>'
   let editButton = '<button class="editButton" id='+book._id+'>Edit</button>'
   let deleteButton = '<button id='+book._id+' class="deleteButton">Delete</button>'
   let buttons = editButton + deleteButton
@@ -66,6 +66,7 @@ $(document).on('click', "#newBook", function(event) {
 
 $(document).on('click', '.editButton', function(event){
   let parent = $(this).parent()
+  //$(this).parent().replaceWith($(".editForm"))
   if($(this).html() === "Save") {
     let id = $(this).attr('id')
     let title = $('#editTitle').val()

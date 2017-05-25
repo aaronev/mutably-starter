@@ -3,7 +3,7 @@ For goal #383
 
 ## To get this project running
 1. `npm install`
-1. `npm start` to run (uses nodemon)
+2. `npm start` to run (uses nodemon)
 
 # CRUD Mutably
 
@@ -46,7 +46,7 @@ This goal is designed as an introduction to working with third-party APIs so tha
 - [x] __10:__ A user can delete an existing item via a delete button next to each item. No page refresh.
 - [x] __10:__ Use a UI library to make your site look nice.
 - [x] __5:__ The artifact produced is properly licensed, preferably with the MIT license.
-- [x] __5:__ App is deployed on Heroku.
+- [x] __5:__ App is deployed on Heroku. [Deployed](https://mutably-api.herokuapp.com/)
 
 ### Stretch
 

@@ -9,3 +9,9 @@
   text-align: center;
   overflow-y: scroll;
 }
+
+.floating{
+  text-align: center;
+  position: fixed;
+  left: 80%;
+}
