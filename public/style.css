@@ -1,5 +1,30 @@
 /*Custom styles here*/
 
+/*body {
+  overflow:hidden;
+}
+*/
+
+.navbar-brand {
+  text-align: center;
+  font-size: 39px;
+  font-family: times;
+}
+
+.deleteButton,
+.editButton {
+  text-align: center;
+  font-size: 15px;
+  margin: 1px;
+
+}
+
+.col-sm-offset-2 {
+  text-align: center;
+  font-size: 37px;
+  font-family: times;
+}
+
 .panel panel-default {
   text-align: center;
   overflow-y: scroll;
@@ -8,10 +33,39 @@
 .list-group {
   text-align: center;
   overflow-y: scroll;
+  height: 10%;
+  font-family: times;
+  padding: 10px;
 }
 
-.floating{
+.addForm {
   text-align: center;
   position: fixed;
   left: 80%;
+  padding: 22px;
+  font-family: times;
+  font-size: 18px;
+}
+
+.panel panel-default {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+navbar navbar-defaul {
+  text-align: center;
+}
+
+ul {
+  width: 100%;
+}
+
+.editForm {
+  font-size: 18px;
+  font-family: times;
+  text-align: center;
+  position: fixed;
+  border: solid;
+  left: 41.5%;
+  padding: 10px;
 }

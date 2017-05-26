@@ -1,20 +1,13 @@
 console.log("Sanity Check: JS is working!");
 
-function form(title, image, author, releaseDate) {
-  let book = {
-    title: title,
-    image: image,
-    author: author,
-    releaseDate: releaseDate
-  }
-  return book
-} 
+let allBookDataBase = []
 
 function getAllBooks() {
   $.ajax({url: "https://mutably.herokuapp.com/books", 
     success: function(result) {
       let books = result.books
       for (let i = 0; i < books.length; i++) {
+        allBookDataBase.push(books[i])
         addBook(books[i])
       }
     }
@@ -22,14 +15,14 @@ function getAllBooks() {
 } 
 
 function addBook(book) {
-  let title = '<div><h1 class="addTitle">'+book.title+'</h1></div>'
-  let image = '<div><img class="addImage" width= "80%" src="'+book.image+'"/></div>'
-  let author = '<div><h2  class="addAuthor">'+book.author+'</h2></div>'
-  let releaseDate = '<div><h5 class="addReleaseDate">'+book.releaseDate+'</h5></div>'
+  let title = '<h2 class="addTitle">'+book.title+'</h2>'
+  let image = '<div><img class="addImage" width= "40%" src="'+book.image+'"/></div>'
+  let author = '<h3  class="addAuthor">'+book.author+'</h3>'
+  let releaseDate = '<div><h4 class="addReleaseDate">'+book.releaseDate+'</h4></div>'
   let editButton = '<button class="editButton" id='+book._id+'>Edit</button>'
   let deleteButton = '<button id='+book._id+' class="deleteButton">Delete</button>'
   let buttons = editButton + deleteButton
-  let li = title + image + author + releaseDate + buttons
+  let li =  image + title + author + releaseDate + buttons
   $('.list-group').append('<li class="book" id='+book._id+'>'+li+'</li>')
 }
 
@@ -66,14 +59,18 @@ $(document).on('click', "#newBook", function(event) {
 
 $(document).on('click', '.editButton', function(event){
   let parent = $(this).parent()
-  //$(this).parent().replaceWith($(".editForm"))
   if($(this).html() === "Save") {
     let id = $(this).attr('id')
     let title = $('#editTitle').val()
     let img = $('#editImage').val()
     let auth =  $('#editAuthor').val()
     let relDate = $('#editReleaseDate').val() 
-    let updatedBook = form(title, img, auth, relDate)
+    let updatedBook = {
+      title: title, 
+      image: img,
+      author: auth,
+      releaseDate: relDate
+    }
     let siblingTitle = parent.find(".addTitle")
     let siblingImage = parent.find(".addImage")
     let siblingAuthor = parent.find(".addAuthor")
@@ -85,7 +82,7 @@ $(document).on('click', '.editButton', function(event){
       success: function() {
         $('.editForm').hide()
         siblingTitle.replaceWith('<h1 class="addTitle">'+title+'</h1>')
-        siblingImage.replaceWith('<img class="addImage" width= "80%" src="'+img+'"/>')
+        siblingImage.replaceWith('<img class="addImage" width= "40%" src="'+img+'"/>')
         siblingAuthor.replaceWith('<h2  class="addAuthor">'+auth+'</h2>')
         siblingRelease.replaceWith('<h5 class="addReleaseDate">'+relDate+'</h5>')
       }
