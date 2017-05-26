@@ -1,71 +1,34 @@
-/*Custom styles here*/
-
-/*body {
-  overflow:hidden;
-}
-*/
-
-.navbar-brand {
+h2 {
   text-align: center;
-  font-size: 39px;
-  font-family: times;
 }
 
-.deleteButton,
-.editButton {
+h3 {
   text-align: center;
-  font-size: 15px;
-  margin: 1px;
-
 }
 
-.col-sm-offset-2 {
+h5 {
   text-align: center;
-  font-size: 37px;
-  font-family: times;
 }
 
-.panel panel-default {
-  text-align: center;
-  overflow-y: scroll;
+img {
+  width: 50%;
 }
-
-.list-group {
-  text-align: center;
-  overflow-y: scroll;
-  height: 10%;
-  font-family: times;
+.bookDisplay {
   padding: 10px;
 }
-
-.addForm {
-  text-align: center;
-  position: fixed;
-  left: 80%;
-  padding: 22px;
-  font-family: times;
-  font-size: 18px;
-}
-
-.panel panel-default {
-  height: 80%;
-  overflow-y: scroll;
-}
-
-navbar navbar-defaul {
+.addBookDelete {
   text-align: center;
 }
 
-ul {
-  width: 100%;
+.edit-form {
+  display: none;
+  overflow-x: scroll;
 }
 
-.editForm {
-  font-size: 18px;
-  font-family: times;
+.save-btn {
+  display: none;
+}
+
+.addImage {
   text-align: center;
-  position: fixed;
-  border: solid;
-  left: 41.5%;
-  padding: 10px;
 }
