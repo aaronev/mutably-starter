@@ -3,20 +3,36 @@
   <head>
     <title>Mutably front-end</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="/script.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
   </head>
   <body class="container">
-    <div class="col-sm-8 col-sm-offset-2">
+     <div class="col-sm-8 col-sm-offset-2">
       <nav class="navbar navbar-default">
-        <a class="navbar-brand" href="/">Mutably Front-end</a>
+        <a class="navbar-brand" href="/">Mutably API Books</a>
       </nav>
+       <input type="submit" id="addNewBook" value="Add Book">
       <div class="panel panel-default">
-        <div class="panel-heading">[Your Chosen Resource]</div>
-        <ul class="list-group">
-          <!-- your resource items here -->
-        </ul>
+        <div class="panel-heading">Books</div>
+        <ul class="list-group"></ul>
+      </div>
+    </div>
+    <div class="floating">
+      <div class="addForm">
+        <fieldset>
+          <legend>Add Book</legend>
+            Title <br>
+              <input default="Title" id="title" placeholder="Title" required> <br>
+            Image <br>
+              <input default="Image" id="image" placeholder="Image" required> <br>
+            Author <br>
+              <input default="Author" id="author" placeholder="Author" required> <br>
+            Release Date <br>
+              <input default="Release Date" id="releaseDate" placeholder="Release Date" required> <br>
+          <input type="submit" id="newBook" value="Add">
+          <input type="submit" id="hideForm" value="Close">
+        </fieldset>
       </div>
     </div>
   </body>

@@ -1,1 +1,44 @@
-/*Custom styles here*/
+h2 {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+}
+
+img {
+  width: 50%;
+}
+.bookDisplay {
+  padding: 10px;
+}
+.addBookDelete {
+  text-align: center;
+}
+
+.edit-form {
+  display: none;
+  overflow-x: scroll;
+}
+
+.save-btn {
+  display: none;
+}
+
+.addImage {
+  text-align: center;
+}
+
+.addForm {
+  position: fixed;
+  left: 80%;
+  top: 10%;
+}
+
+.editInfo { 
+  cursor: pointer; cursor: hand; 
+}
