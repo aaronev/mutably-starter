@@ -1,48 +1,10 @@
 console.log("Sanity Check: JS is working!");
 
-function addBook(book) {
-  let theBooks = (
-    '<li class="list-group-item item-'+book._id+'">'
-      +'<button class="btn btn-danger delete-btn pull-right" data-id="'+book._id+'">Delete</button>'
-      +'<div class="c">'
-        +'<h2>'+book.title+'</h2>'
-        +'<div class="addImage">'
-          +'<img src="'+book.image+'">'
-        +'</div>'
-        +'<h3>'+book.author+'</h3>'
-        +'<h5>'+book.releaseDate+'</h5>'
-      +'</div>'
-      +'</div class="editingForm">'
-          +'<div class="list-group-item">'
-            +'<button class="btn btn-primary edit-btn edit-'+book._id+'" data-id="'+book._id+'">Edit</button>'
-            +'<button class="btn btn-success save-btn save-'+book._id+'" data-id="'+book._id+'">Save</button>'
-            +'<span class="title-'+book._id+'">&nbsp;'+book.title+'</span>'
-            +'<span class="form-inline edit-form input-'+book._id+'">&nbsp;<input class="form-control" value="'+book.title+'"/></span></div>'
-          +'<div class="list-group-item">'
-            +'<button class="btn btn-primary edit-btn edit-'+book._id+'" data-id="'+book._id+'">Edit</button>'
-            +'<button class="btn btn-success save-btn save-'+book._id+'" data-id="'+book._id+'">Save</button>'
-            +'<span class="title-'+book._id+'">&nbsp;'+book.image+'</span>'
-            +'<span class="form-inline edit-form input-'+book._id+'">&nbsp;<input class="form-control" value="'+book.image+'"/></span></div>'
-          +'<div class="list-group-item">'
-            +'<button class="btn btn-primary edit-btn edit-'+book._id+'" data-id="'+book._id+'">Edit</button>'
-            +'<button class="btn btn-success save-btn save-'+book._id+'" data-id="'+book._id+'">Save</button>'
-            +'<span class="title-'+book._id+'">&nbsp;'+book.author+'</span>'
-            +'<span class="form-inline edit-form input-'+book._id+'">&nbsp;<input class="form-control" value="'+book.author+'"/></span></div>'
-          +'<div class="list-group-item">'
-            +'<button class="btn btn-primary edit-btn edit-'+book._id+'" data-id="'+book._id+'">Edit</button>'
-            +'<button class="btn btn-success save-btn save-'+book._id+'" data-id="'+book._id+'">Save</button>'
-            +'<span class="title-'+book._id+'">&nbsp;'+book.releaseDate+'</span>'
-            +'<span class="form-inline edit-form input-'+book._id+'">&nbsp;<input class="form-control" value="'+book.releaseDate+'"/></span></div>'
-      +'</div>'
-    +'</li>'
-  )
-  $('.list-group').append(theBooks)
-}
-
 function getAllBooks() {
   $.ajax({url: "https://mutably.herokuapp.com/books", 
     success: function(result) {
       let books = result.books
+      console.log(books.length)
       for (let i = 0; i < books.length; i++) {
         addBook(books[i])
       }
@@ -52,6 +14,16 @@ function getAllBooks() {
 
 $(document).ready(function(){
   getAllBooks();
+  $('.addForm').hide()
+  $('.hideEditForm').hide()
+})
+
+$(document).on('click', "#addNewBook", function(event) {
+  $('.addForm').show()
+})
+
+$(document).on('click', "#hideForm", function(event) {
+  $('.addForm').hide()
 })
 
 $(document).on('click', "#newBook", function(event) {
@@ -84,7 +56,6 @@ $(document).on('click', '.delete-btn', function() {
   let li = $(this).parent()
   let form = li.find('.list-group-item')
   let id = $(this).attr('data-id')
-  $('.editingForm').hide() 
   $.ajax({ 
     method: 'DELETE',
     url: 'https://mutably.herokuapp.com/books/'+id,
@@ -96,96 +67,104 @@ $(document).on('click', '.delete-btn', function() {
   })
 })
 
-$(document).on('click', '.edit-btn', function() {
-  var id = $(this).data('id')
+//////////////////////////WAS SO CLOSE NEEDED TO EDIT MORE BELOW/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // hide the static title, show the input field
+function addBook(book) {
+  let theBooks = (
+    '<li id='+book._id+' class="list-group-item item-'+book._id+'">'
+      +'<div id='+book._id+' class="editted'+book._id+'">'
+        +'<h2 value="title" class="editInfo title" id='+book._id+'>'+book.title+'</h2>'
+        +'<div id='+book._id+' class="addImage">'
+          +'<img class="editInfo image" id='+book._id+' src="'+book.image+'" value="image">'
+        +'</div>'
+        +'<h3 value="author" class="editInfo author" id='+book._id+'>'+book.author+'</h3>'
+        +'<h5 value="releaseDate" class="editInfo releaseDate" id='+book._id+'>'+book.releaseDate+'</h5>'
+        +'<button class="btn btn-primary edit-btn edit-'+book._id+'" data-id="'+book._id+'">Edit</button>'
+        +'<button id='+book._id+' class="btn btn-success save-btn save-'+book._id+'" data-id="'+book._id+'">Save</button>'
+        +'<span class="title-'+book._id+' spanView">'+book.title+'</span>'
+        +'<span class="form-inline edit-form input-'+book._id+'"><input class="editingField" id="form-control"'+book._id+' placeholder="Click to Edit"/></span>'
+        +'<button id='+book._id+' class="btn btn-danger delete-btn pull-right" data-id="'+book._id+'">Delete</button><br>'
+    +'</li>'
+  )
+  $('.list-group').append(theBooks)
+}
+
+$(document).on('click', '.edit-btn', function() {
+  let id = $(this).data('id') 
+  let parent = $(this).parent()
+  let val  = parent.find('.spanView').html()
+  console.log(val)
+  $('.editingField').attr('value', val)
+  $('.spanView').show()
+  $('.edit-form').hide()
+  $('.edit-btn').show()
+  $('.save-btn').hide()
   $('.title-'+id).hide()
   $('.input-'+id).show()
-
-  // hide the edit button, show the save button
   $('.edit-'+id).hide()
   $('.save-'+id).show()
+})
 
+$(document).on('click', '.editInfo', function() {
+  let value = $(this).html()
+  let key = $(this).attr('value')
+  if (!value) {
+    value = $(this).attr('src')
+  }
+  console.log(value)
+  let id = $(this).attr("id")
+  $('.title-'+id).html(value)
+  $('.editingField').attr('value', value)
+  $('.editingField').attr('placeholder', key)
+  console.log('(((((edit((((((', key)
+})
+
+$(document).on('click', '.save-btn', function(event) {
+  event.preventDefault()
+  let parent = $(this).parent()
+  let id = $(this).attr('id')
+  let key = $('.editingField').attr('placeholder')
+  console.log('key######', key)
+  let value = $('.editingField').val()
+  console.log('######', value)
+  let title = parent.find('.title').html()
+  let image = parent.find('.image').attr('src')
+  let author = parent.find('.author').html()
+  let releaseDate = parent.find('.title').html()
+  if (key === "title") {
+    title = value
+  }
+   else if (key === "image") {
+    image = value
+  }
+   else if (key === "author") {
+    author = value
+  }
+   else if (key === "releaseDate") {
+    releaseDate = value
+  }
+  let book = {
+    title: title,
+    image: image,
+    author: author,
+    releaseDate: releaseDate
+  }
+  console.log(book)
+  $.ajax({
+    method: 'PUT',
+    url: 'http://mutably.herokuapp.com/books/'+id,
+    data: book,
+    success: function () {
+      console.log('itworked')
+      getAllBooks()
+      parent.find('.title').html(title)
+      parent.find('.image').attr('src', image)
+      parent.find('.author').html(author)
+      parent.find('.title').html(releaseDate)
+    }
   })
-
-  $(document).on('click', '.save-btn', function() {
-    var id = $(this).data('id')
-
-    // grab the user's inputted data
-    var updatedTitle = $('.input-'+id+' input').val()
-    $.ajax({
-      method: 'PUT',
-      url: 'http://mutably.herokuapp.com/books/'+id,
-      data: {title: updatedTitle},
-      success: console.log('hello')
-    })
-  })
-
-// function handleBookUpdateResponse(data) {
-//   var id = data._id;
-
-//   // replace the old title with the new title
-//   $('.title-'+id).html('&nbsp;'+data.title)
-
-//   $('.title-'+id).show()
-//   $('.input-'+id).hide()
-//   $('.edit-'+id).show()
-//   $('.save-'+id).hide()
-// }
-
-// // $(document).on('click', '.editButton', function(event){
-// //   let parent = $(this).parent()
-// //   if($(this).html() === "Save") {
-// //     let id = $(this).attr('id')
-// //     let title = $('#editTitle').val()
-// //     let img = $('#editImage').val()
-// //     let auth =  $('#editAuthor').val()
-// //     let relDate = $('#editReleaseDate').val() 
-// //     let updatedBook = {
-// //       title: title, 
-// //       image: img,
-// //       author: auth,
-// //       releaseDate: relDate
-// //     }
-// //     let siblingTitle = parent.find(".addTitle")
-// //     let siblingImage = parent.find(".addImage")
-// //     let siblingAuthor = parent.find(".addAuthor")
-// //     let siblingRelease = parent.find(".addReleaseDate")
-// //     $.ajax({
-// //       url: "https://mutably.herokuapp.com/books/"+id, 
-// //       method: "PUT",
-// //       data: updatedBook,
-// //       success: function() {
-// //         $('.editForm').hide()
-// //         siblingTitle.replaceWith('<h1 class="addTitle">'+title+'</h1>')
-// //         siblingImage.replaceWith('<img class="addImage" width= "70%" src="'+img+'"/>')
-// //         siblingAuthor.replaceWith('<h2  class="addAuthor">'+auth+'</h2>')
-// //         siblingRelease.replaceWith('<h5 class="addReleaseDate">'+relDate+'</h5>')
-// //       }
-// //     })
-// //   }
-// // })
-
-// $(document).on('click', '.editButton', function(event){
-//   if ($(this).html() === "Edit") {
-//     let id = $(this).attr('id')
-//     $(this).parent().parent().find('.editing-list').show()
-//     $(this).parent().hide()
-//   } else {$(this).html("Edit")}
-//   $('#editTitle').val($(this).parent().find('.addTitle').html())
-//   $('#editAuthor').val($(this).parent().find('.addAuthor').html())
-//   $('#editImage').val($(this).parent().find('.addImage').attr('src'))
-//   $('#editReleaseDate').val($(this).parent().find('.addReleaseDate').html())
-//   $('.editForm').show()
-// })
-
-// function handleBookAddResponse(data) {
-//   console.log(data);
-//   getAllBooks();
-// }
-
-
-
-
-
+    $('.title-'+id).show()
+    $('.input-'+id).hide()
+    $('.edit-'+id).show()
+    $('.save-'+id).hide()
+})

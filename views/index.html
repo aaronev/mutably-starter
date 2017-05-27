@@ -12,10 +12,10 @@
       <nav class="navbar navbar-default">
         <a class="navbar-brand" href="/">Mutably API Books</a>
       </nav>
+       <input type="submit" id="addNewBook" value="Add Book">
       <div class="panel panel-default">
         <div class="panel-heading">Books</div>
         <ul class="list-group"></ul>
-        <ul class="editing-list"></ul>
       </div>
     </div>
     <div class="floating">
@@ -30,12 +30,10 @@
               <input default="Author" id="author" placeholder="Author" required> <br>
             Release Date <br>
               <input default="Release Date" id="releaseDate" placeholder="Release Date" required> <br>
-          <input type="submit" id="newBook" value="Add"><br>
+          <input type="submit" id="newBook" value="Add">
+          <input type="submit" id="hideForm" value="Close">
         </fieldset>
-      </div> <br>
+      </div>
     </div>
-    <div class="bookTitlesOnly">
-      <ul class="theBookList"><ul>
-    <div>
   </body>
 </html>

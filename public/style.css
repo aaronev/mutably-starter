@@ -32,3 +32,13 @@ img {
 .addImage {
   text-align: center;
 }
+
+.addForm {
+  position: fixed;
+  left: 80%;
+  top: 10%;
+}
+
+.editInfo { 
+  cursor: pointer; cursor: hand; 
+}
