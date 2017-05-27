@@ -46,7 +46,7 @@ This goal is designed as an introduction to working with third-party APIs so tha
 - [x] __10:__ A user can delete an existing item via a delete button next to each item. No page refresh.
 - [x] __10:__ Use a UI library to make your site look nice.
 - [x] __5:__ The artifact produced is properly licensed, preferably with the MIT license.
-- [x] __5:__ App is deployed on Heroku. [Deployed](https://mutably-api.herokuapp.com/)
+- [x] __5:__ App is deployed on Heroku. [Deployed](https://mutably-api.herokuapp.com/) Note: The master branch has our latest codes that meets all specs, but with a few bugs that needed to be fix, thanks!
 
 ### Stretch
 
